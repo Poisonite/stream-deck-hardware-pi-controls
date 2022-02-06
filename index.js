@@ -57,36 +57,26 @@ http
       console.log(`Lower brightness by 1 step, GPIO: ${buttonGPIOs.dim}`);
       pressButton(buttonGPIOs.dim);
     }
-    // Hold brightness button for 6 seconds to simulate full brightness
+    // Hold brightness button for 5 seconds to simulate full brightness
     if (queryObject.action === "fullBright") {
       console.log(`Setting as bright as possible, GPIO: ${buttonGPIOs.bright}`);
-      //   for (let i = 0; i < 20; i++) {
-      //     setTimeout(() => {
-
-      //     }, 500);
-      //   }
-      pressButton(buttonGPIOs.bright, 6);
+      pressButton(buttonGPIOs.bright, 5);
     }
-    // Hold dimmer button for 6 seconds to simulate lowest brightness
+    // Hold dimmer button for 5 seconds to simulate lowest brightness
     if (queryObject.action === "fullDim") {
       console.log(`Setting as dim as possible, GPIO: ${buttonGPIOs.dim}`);
-      //   for (let i = 0; i < 20; i++) {
-      //     setTimeout(() => {
-
-      //     }, 500);
-      //   }
-      pressButton(buttonGPIOs.dim, 6);
+      pressButton(buttonGPIOs.dim, 5);
     }
 
     // Set to fully dim and then raise it by half to get 50% brightness
     if (queryObject.action === "50Bright") {
       // Full dim
       console.log(`Setting as dim as possible, GPIO: ${buttonGPIOs.dim}`);
-      pressButton(buttonGPIOs.dim, 6);
+      pressButton(buttonGPIOs.dim, 5);
 
       // Half bright after fully dim
       setTimeout(() => {
-        pressButton(buttonGPIOs.bright, 2.5);
+        pressButton(buttonGPIOs.bright, 1.5);
       }, 6200);
     }
 
