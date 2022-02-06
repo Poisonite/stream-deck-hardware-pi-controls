@@ -12,14 +12,17 @@
 //   .listen(8080);
 
 var Gpio = require("onoff").Gpio; //include onoff to interact with the GPIO
-var light = new Gpio(17, "out"); //use GPIO pin 17, and specify that it is output
 
-console.log("Resetting GPIO 17 to HIGH");
+const myGPIO = 18;
+
+var light = new Gpio(myGPIO, "out"); //use the GPIO pin we specified, and specify that it is output
+
+console.log(`Resetting GPIO ${myGPIO} to HIGH`);
 light.writeSync(1);
-console.log("Setting GPIO 17 to LOW");
+console.log(`Setting GPIO ${myGPIO} to LOW`);
 light.writeSync(0);
 
 setTimeout(() => {
-  console.log("Setting GPIO 17 to LOW");
+  console.log(`Setting GPIO ${myGPIO} to HIGH`);
   light.writeSync(1);
 }, 100);
