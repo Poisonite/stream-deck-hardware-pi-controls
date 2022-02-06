@@ -44,53 +44,58 @@ http
     console.log(queryObject);
     // Turn the power on
     if (queryObject.action === "togglePower") {
-      console.log(`Toggling power, GPIO: ${buttonGPIOs.power}`);
+      console.info(`Toggling power, GPIO: ${buttonGPIOs.power}`);
       pressButton(buttonGPIOs.power);
     }
     // Increase brightness by 1 controller step
     if (queryObject.action === "brightOneStep") {
-      console.log(`Raise brightness by 1 step, GPIO: ${buttonGPIOs.bright}`);
+      console.info(`Raise brightness by 1 step, GPIO: ${buttonGPIOs.bright}`);
       pressButton(buttonGPIOs.bright);
     }
     // Decrease brightness by 1 controller step
     if (queryObject.action === "dimOneStep") {
-      console.log(`Lower brightness by 1 step, GPIO: ${buttonGPIOs.dim}`);
+      console.info(`Lower brightness by 1 step, GPIO: ${buttonGPIOs.dim}`);
       pressButton(buttonGPIOs.dim);
     }
     // Hold brightness button for 5 seconds to simulate full brightness
     if (queryObject.action === "fullBright") {
-      console.log(`Setting as bright as possible, GPIO: ${buttonGPIOs.bright}`);
+      console.info(
+        `Setting as bright as possible, GPIO: ${buttonGPIOs.bright}`
+      );
       pressButton(buttonGPIOs.bright, 5);
     }
     // Hold dimmer button for 5 seconds to simulate lowest brightness
     if (queryObject.action === "fullDim") {
-      console.log(`Setting as dim as possible, GPIO: ${buttonGPIOs.dim}`);
+      console.info(`Setting as dim as possible, GPIO: ${buttonGPIOs.dim}`);
       pressButton(buttonGPIOs.dim, 5);
     }
-    // Set to fully dim and then raise it by half to get 50% brightness
-    if (queryObject.action === "50Bright") {
-      // Full dim
-      console.log(`Setting as dim as possible, GPIO: ${buttonGPIOs.dim}`);
-      pressButton(buttonGPIOs.dim, 5);
+    // // Set to fully dim and then raise it by half to get 50% brightness
+    // if (queryObject.action === "50Bright") {
+    //   // Full dim
+    //   console.info(`Setting as dim as possible, GPIO: ${buttonGPIOs.dim}`);
+    //   pressButton(buttonGPIOs.dim, 5);
 
-      // Half bright after fully dim
-      setTimeout(() => {
-        pressButton(buttonGPIOs.bright, 1.5);
-      }, 5200);
-    }
-    // Set to fully dim and then raise it by half to get 25% brightness
-    if (queryObject.action === "25Bright") {
-      // Full dim
-      console.log(`Setting as dim as possible, GPIO: ${buttonGPIOs.dim}`);
-      pressButton(buttonGPIOs.dim, 5);
+    //   // Half bright after fully dim
+    //   setTimeout(() => {
+    //     pressButton(buttonGPIOs.bright, 1.5);
+    //   }, 5200);
+    // }
+    // // Set to fully dim and then raise it by half to get 25% brightness
+    // if (queryObject.action === "25Bright") {
+    //   // Full dim
+    //   console.info(`Setting as dim as possible, GPIO: ${buttonGPIOs.dim}`);
+    //   pressButton(buttonGPIOs.dim, 5);
 
-      // 25% bright after fully dim
-      setTimeout(() => {
-        pressButton(buttonGPIOs.bright, 0.75);
-      }, 5200);
-    }
-    if ((queryObject.action = "customBright" && queryObject.timing)) {
-      const holdTime = queryObject.timing >= 0.2 ? queryObject.timing : 0.2;
+    //   // 25% bright after fully dim
+    //   setTimeout(() => {
+    //     pressButton(buttonGPIOs.bright, 0.75);
+    //   }, 5200);
+    // }
+    if ((queryObject.action = "customBright" && queryObject.percent)) {
+      const holdTime =
+        queryObject.percent * 0.03 >= 0.5
+          ? queryObject.percent * 0.03
+          : queryObject.percent * 0.03 + 0.5;
 
       // Full dim
       console.log(`Setting as dim as possible, GPIO: ${buttonGPIOs.dim}`);
@@ -104,7 +109,7 @@ http
 
     res.writeHead(200, { "Content-Type": "text/html" });
     res.end(
-      "Add the query string 'action' with a value of 'togglePower', 'brightOneStep', 'dimOneStep', '50Bright', 'fullBright', or 'fullDim'"
+      " <h1>test</h1> Add the query string 'action' with a value of 'togglePower', 'brightOneStep', 'dimOneStep', '50Bright', 'fullBright', or 'fullDim'"
     );
   })
   .listen(80);
