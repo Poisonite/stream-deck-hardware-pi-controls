@@ -13,7 +13,7 @@
 
 var Gpio = require("onoff").Gpio; //include onoff to interact with the GPIO
 
-const myGPIO = 18;
+const myGPIO = 4;
 
 var light = new Gpio(myGPIO, "out"); //use the GPIO pin we specified, and specify that it is output
 
