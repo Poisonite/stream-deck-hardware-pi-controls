@@ -8,8 +8,8 @@ var Gpio = require("onoff").Gpio;
 // Store a dictionary of which button is on which GPIO
 const buttonGPIOs = {
   power: 17,
-  bright: 18,
-  dim: 27,
+  bright: 27,
+  dim: 22,
 };
 
 // Reset each button to it's non-pressed value
