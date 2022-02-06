@@ -60,14 +60,18 @@ http
     if (queryObject.action === "fullBright") {
       console.log(`Setting as bright as possible, GPIO: ${buttonGPIOs.bright}`);
       for (let i = 0; i < 20; i++) {
-        pressButton(buttonGPIOs.bright);
+        setTimeout(() => {
+          pressButton(buttonGPIOs.bright);
+        }, 200);
       }
     }
     // Hit dimmer button 20 times to simulate lowest brightness
     if (queryObject.action === "fullDim") {
       console.log(`Setting as dim as possible, GPIO: ${buttonGPIOs.dim}`);
       for (let i = 0; i < 20; i++) {
-        pressButton(buttonGPIOs.dim);
+        setTimeout(() => {
+          pressButton(buttonGPIOs.dim);
+        }, 200);
       }
     }
 
