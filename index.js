@@ -79,7 +79,7 @@ http
       for (let i = 0; i < 20; i++) {
         setTimeout(() => {
           pressButton(buttonGPIOs.bright);
-        }, 200);
+        }, 500);
       }
     }
     // Hit dimmer button 20 times to simulate lowest brightness
@@ -88,7 +88,7 @@ http
       for (let i = 0; i < 20; i++) {
         setTimeout(() => {
           pressButton(buttonGPIOs.dim);
-        }, 200);
+        }, 500);
       }
     }
 
