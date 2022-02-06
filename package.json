@@ -1,0 +1,23 @@
+{
+  "name": "stream-deck-hardware-pi-controls",
+  "version": "0.0.1",
+  "description": "Control hardware interfaces with the Elgato Stream Deck using a Raspberry Pi as communication layer",
+  "main": "index.js",
+  "dependencies": {
+    "onoff": "^6.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Poisonite/stream-deck-hardware-pi-controls.git"
+  },
+  "author": "Zac Ingoglia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Poisonite/stream-deck-hardware-pi-controls/issues"
+  },
+  "homepage": "https://github.com/Poisonite/stream-deck-hardware-pi-controls#readme"
+}
