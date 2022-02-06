@@ -9,7 +9,7 @@ var Gpio = require("onoff").Gpio;
 const buttonGPIOs = {
   power: 17,
   bright: 18,
-  dim: 23,
+  dim: 27,
 };
 
 // Reset each button to it's non-pressed value
@@ -17,9 +17,15 @@ Object.values(buttonGPIOs).forEach((GPIO) => {
   //use the GPIO that we specified, and specify that it is output
   var button = new Gpio(GPIO, "out");
 
-  // Reset button to default value (not pressed)
-  console.log(`Resetting GPIO ${GPIO} to HIGH`);
-  button.writeSync(1);
+  if (GPIO === buttonGPIOs.dim) {
+    // Reset button to default value (not pressed)
+    console.log(`Resetting GPIO ${GPIO} to LOW`);
+    button.writeSync(0);
+  } else {
+    // Reset button to default value (not pressed)
+    console.log(`Resetting GPIO ${GPIO} to HIGH`);
+    button.writeSync(1);
+  }
 });
 
 // Do a momentary press of the provided button
@@ -27,14 +33,25 @@ const pressButton = (GPIO) => {
   //use the GPIO that we specified, and specify that it is output
   var button = new Gpio(GPIO, "out");
 
-  console.log(`Setting GPIO ${GPIO} to LOW`);
-  button.writeSync(0);
-
-  // Press the button
-  setTimeout(() => {
+  if (GPIO === buttonGPIOs.dim) {
     console.log(`Setting GPIO ${GPIO} to HIGH`);
     button.writeSync(1);
-  }, 100);
+
+    // Press the button
+    setTimeout(() => {
+      console.log(`Setting GPIO ${GPIO} to LOW`);
+      button.writeSync(0);
+    }, 100);
+  } else {
+    console.log(`Setting GPIO ${GPIO} to LOW`);
+    button.writeSync(0);
+
+    // Press the button
+    setTimeout(() => {
+      console.log(`Setting GPIO ${GPIO} to HIGH`);
+      button.writeSync(1);
+    }, 100);
+  }
 };
 
 http
