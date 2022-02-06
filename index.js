@@ -72,6 +72,8 @@ http
     }
 
     res.writeHead(200, { "Content-Type": "text/html" });
-    res.end("Feel free to add query parameters to the end of the url");
+    res.end(
+      "Add the query string 'action' with a value of 'togglePower', 'brightOneStep', 'dimOneStep', 'fullBright', or 'fullDim'"
+    );
   })
   .listen(80);
