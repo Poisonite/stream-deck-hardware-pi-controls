@@ -84,8 +84,10 @@ http
       console.log(`Setting as dim as possible, GPIO: ${buttonGPIOs.dim}`);
       pressButton(buttonGPIOs.dim, 6);
 
-      // Half bright
-      pressButton(buttonGPIOs.bright, 2.5);
+      // Half bright after fully dim
+      setTimeout(() => {
+        pressButton(buttonGPIOs.bright, 2.5);
+      }, 6200);
     }
 
     res.writeHead(200, { "Content-Type": "text/html" });
