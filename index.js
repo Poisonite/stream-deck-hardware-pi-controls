@@ -15,6 +15,24 @@ const lightButtonGPIOs = {
   dim: 22,
 };
 
+const lightGpioList = [
+  {
+    power: 17,
+    bright: 27,
+    dim: 22,
+  },
+  {
+    power: 17,
+    bright: 27,
+    dim: 22,
+  },
+  {
+    power: 17,
+    bright: 27,
+    dim: 22,
+  },
+];
+
 // Reset each button to it's non-pressed value
 Object.values(lightButtonGPIOs).forEach((GPIO) => {
   //use the GPIO that we specified, and specify that it is output
@@ -74,6 +92,7 @@ http
       console.info(`Setting as dim as possible, GPIO: ${lightButtonGPIOs.dim}`);
       pressButton(lightButtonGPIOs.dim, 5);
     }
+    // Set the brightness to a speific precentage out of 100
     if ((queryObject.action = "customBright" && queryObject.percent)) {
       const holdTime =
         queryObject.percent * 0.03 >= 0.5
