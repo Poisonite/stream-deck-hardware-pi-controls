@@ -13,27 +13,22 @@
 
 var Gpio = require("onoff").Gpio; //include onoff to interact with the GPIO
 
-const myGPIO = 18;
+const myGPIO = 17;
 
 var light = new Gpio(myGPIO, "out"); //use the GPIO pin we specified, and specify that it is output
 
-// for (let i = 0; i < 2; i++) {
-//   console.log(`Loop ${i}`);
-
-//   // Wait before starting next loop
-//   setTimeout(() => {
-//     console.log(`Waiting 300ms before starting next loop`);
-//   }, 300);
-// }
-
-// Reset button to default value (not pressed)
-console.log(`Resetting GPIO ${myGPIO} to HIGH`);
-light.writeSync(1);
-console.log(`Setting GPIO ${myGPIO} to LOW`);
-light.writeSync(0);
-
-// Press the button
-setTimeout(() => {
-  console.log(`Setting GPIO ${myGPIO} to HIGH`);
+const pressButton = (GPIO) => {
+  // Reset button to default value (not pressed)
+  console.log(`Resetting GPIO ${myGPIO} to HIGH`);
   light.writeSync(1);
-}, 100);
+  console.log(`Setting GPIO ${myGPIO} to LOW`);
+  light.writeSync(0);
+
+  // Press the button
+  setTimeout(() => {
+    console.log(`Setting GPIO ${myGPIO} to HIGH`);
+    light.writeSync(1);
+  }, 100);
+};
+
+pressButton(myGPIO);
