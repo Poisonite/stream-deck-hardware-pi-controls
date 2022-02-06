@@ -20,7 +20,7 @@ var light = new Gpio(myGPIO, "out"); //use the GPIO pin we specified, and specif
 const pressButton = (GPIO) => {
   // Reset button to default value (not pressed)
   console.log(`Resetting GPIO ${myGPIO} to HIGH`);
-  light.writeSync(1);
+  //   light.writeSync(1);
   console.log(`Setting GPIO ${myGPIO} to LOW`);
   light.writeSync(0);
 
