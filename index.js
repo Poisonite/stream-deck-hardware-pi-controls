@@ -41,7 +41,7 @@ const pressButton = (GPIO) => {
     setTimeout(() => {
       console.log(`Setting GPIO ${GPIO} to LOW`);
       button.writeSync(0);
-    }, 100);
+    }, 5000);
   } else {
     console.log(`Setting GPIO ${GPIO} to LOW`);
     button.writeSync(0);
