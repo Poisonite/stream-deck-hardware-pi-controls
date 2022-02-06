@@ -23,7 +23,7 @@ Object.values(buttonGPIOs).forEach((GPIO) => {
 });
 
 // Do a momentary press of the provided button
-const pressButton = (GPIO, holdSeconds = 2) => {
+const pressButton = (GPIO, holdSeconds = 0.2) => {
   //use the GPIO that we specified, and specify that it is output
   var button = new Gpio(GPIO, "out");
   const holdMilli = holdSeconds * 1000;
