@@ -109,7 +109,79 @@ http
 
     res.writeHead(200, { "Content-Type": "text/html" });
     res.end(
-      " <h1>test</h1> Add the query string 'action' with a value of 'togglePower', 'brightOneStep', 'dimOneStep', '50Bright', 'fullBright', or 'fullDim'"
+      `
+      <body>
+  <h1>Welcome to The TomPod Control Center</h1>
+  <h2>
+    Look at the list below for each of the supported requests and their usage
+  </h2>
+  <br />
+
+  <h2><strong>action</strong></h2>
+  <h3>
+    All commands must begin with an
+    <strong><code>action</code></strong> parameter
+  </h3>
+  <h5>
+    Each of the options below are legal arguments to pass to
+    <strong><code>action</code></strong>
+  </h5>
+
+  <ul>
+    <li><code>togglePower</code></li>
+    <ul>
+      <li>This argument will flip the power state of the light(s)</li>
+    </ul>
+    <li><code>brightOneStep</code></li>
+    <ul>
+      <li>
+        This argument will increase the brightness of the light(s) by 1 step
+      </li>
+    </ul>
+    <li><code>dimOneStep</code></li>
+    <ul>
+      <li>
+        This argument will decrease the brightness of the light(s) by 1 step
+      </li>
+    </ul>
+    <li><code>fullBright</code></li>
+    <ul>
+      <li>
+        This argument will set the light(s) to the highest possible brightness
+      </li>
+    </ul>
+    <li><code>fullDim</code></li>
+    <ul>
+      <li>
+        This argument will set the light(s) to the lowest possible brightness
+      </li>
+    </ul>
+    <li><code>customBright</code></li>
+    <ul>
+      <li>
+        This argument will set the light(s) to a specific brightness percentage.
+      </li>
+      <li>
+        If <code>customBright</code> is used then the
+        <strong><code>percent</code></strong> parameter must also be passed
+      </li>
+    </ul>
+  </ul>
+
+  <br />
+  <h2><strong>percent</strong></h2>
+  <h3>
+    Specific actions may also require the
+    <strong><code>percent</code></strong> parameter
+  </h3>
+  <h5>
+    Each of the options below are legal arguments to pass to
+    <strong><code>percent</code></strong>
+  </h5>
+
+  <p>The percent argument accepts a numerical value between 1 and 100</p>
+</body>
+      `
     );
   })
   .listen(80);
