@@ -67,7 +67,6 @@ http
       console.log(`Setting as dim as possible, GPIO: ${buttonGPIOs.dim}`);
       pressButton(buttonGPIOs.dim, 5);
     }
-
     // Set to fully dim and then raise it by half to get 50% brightness
     if (queryObject.action === "50Bright") {
       // Full dim
@@ -77,7 +76,30 @@ http
       // Half bright after fully dim
       setTimeout(() => {
         pressButton(buttonGPIOs.bright, 1.5);
-      }, 6200);
+      }, 5200);
+    }
+    // Set to fully dim and then raise it by half to get 25% brightness
+    if (queryObject.action === "25Bright") {
+      // Full dim
+      console.log(`Setting as dim as possible, GPIO: ${buttonGPIOs.dim}`);
+      pressButton(buttonGPIOs.dim, 5);
+
+      // 25% bright after fully dim
+      setTimeout(() => {
+        pressButton(buttonGPIOs.bright, 0.75);
+      }, 5200);
+    }
+    if ((queryObject.action = "customBright" && queryObject.timing)) {
+      const holdTime = queryObject.timing >= 0.2 ? queryObject.timing : 0.2;
+
+      // Full dim
+      console.log(`Setting as dim as possible, GPIO: ${buttonGPIOs.dim}`);
+      pressButton(buttonGPIOs.dim, 5);
+
+      // set the provided brightness after fully dim
+      setTimeout(() => {
+        pressButton(buttonGPIOs.bright, holdTime);
+      }, 5200);
     }
 
     res.writeHead(200, { "Content-Type": "text/html" });
