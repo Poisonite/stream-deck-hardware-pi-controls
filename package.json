@@ -1,7 +1,7 @@
 {
   "name": "stream-deck-hardware-pi-controls",
-  "version": "1.0.0",
-  "description": "Control hardware interfaces with the Elgato Stream Deck using a Raspberry Pi as communication layer",
+  "version": "1.0.1",
+  "description": "Control hardware interfaces over an HTTP getter using a Raspberry Pi as communication layer",
   "main": "index.js",
   "dependencies": {
     "onoff": "^6.0.3"

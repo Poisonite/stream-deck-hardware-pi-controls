@@ -1,4 +1,4 @@
-# README -- URL Query Parameters Guide
+# README -- URL Query Parameters Guide - Version: 1.0.1
 
 ## Look at the list below for each of the supported requests and their usage
 
