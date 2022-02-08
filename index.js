@@ -74,8 +74,25 @@ http
 
     // Determine which devices we want to minipulate
     if (queryObject.targets) {
+      // Convert the string array to a proper array
+      const targetsArr = queryObject.targets.split(",");
+      const cleanTargetsArr = [];
+      // Then strip out any invalid chars
+      targetsArr.forEach((elem, i) => {
+        cleanTargetsArr.push(
+          arr[i]
+            .replace(/\'/g, "")
+            .replace(/\[/g, "")
+            .replace(/\]/g, "")
+            .replace(/\ /g, "")
+            .replace(/\"/g, "")
+            .replace(/\`/g, "")
+            .replace(/\,/g, "")
+        );
+      });
+
       // Add each targeted device to the active target object
-      queryObject.targets.forEach((target) => {
+      cleanTargetsArr.forEach((target) => {
         // Skip if the target value provided doesn't
         //    match one of the defined targets in the master object
         if (!deviceGpioList[target]) {
