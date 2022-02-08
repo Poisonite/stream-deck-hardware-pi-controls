@@ -93,7 +93,7 @@ http
       // Then strip out any invalid chars
       targetsArr.forEach((elem, i) => {
         cleanTargetsArr.push(
-          arr[i]
+          targetsArr[i]
             .replace(/\'/g, "")
             .replace(/\[/g, "")
             .replace(/\]/g, "")
