@@ -134,7 +134,7 @@ http
           console.log(
             `Toggling dome light power, GPIO: ${activeGpioList[device].power}`
           );
-          console.log("Dome Light Read:", lightSwitch.readSync());
+          console.log("Dome Light Read:", lightSwitch.readSync().valueOf());
           !lightSwitch.readSync()
             ? lightSwitch.writeSync(0)
             : lightSwitch.writeSync(1);
