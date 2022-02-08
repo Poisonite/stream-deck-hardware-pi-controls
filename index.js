@@ -123,7 +123,7 @@ http
       activeGpioList = deviceGpioList;
     }
 
-    if ((queryObject.action = domeOn)) {
+    if ((queryObject.action = "domeOn")) {
       //use the GPIO that we specified, and specify that it is output
       var lightSwitch = new Gpio(deviceGpioList.dome.power, "out");
 
@@ -132,7 +132,7 @@ http
       lightSwitch.writeSync(0);
     }
 
-    if ((queryObject.action = domeOn)) {
+    if ((queryObject.action = "domeOff")) {
       //use the GPIO that we specified, and specify that it is output
       var lightSwitch = new Gpio(deviceGpioList.dome.power, "out");
 
