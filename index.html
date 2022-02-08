@@ -4,12 +4,26 @@
     Look at the list below for each of the supported requests and their usage
   </h2>
   <br />
+  <hr />
 
-  <h2><strong>action</strong></h2>
+  <h2 id="action" style="color: red"><strong>action</strong></h2>
   <h3>
     All commands must begin with an
-    <strong><code>action</code></strong> parameter
+    <strong><code>action</code></strong> parameter.
   </h3>
+  <h4>
+    It's important to note that by default all non-dome lights are selected when
+    using action.
+    <br />
+    Use the
+    <strong>
+      <code>
+        <a href="#targets">targets</a>
+      </code>
+    </strong>
+    command to modify custom light combos.
+    <strong>This will not effect dome commands.</strong>
+  </h4>
   <h5>
     Each of the options below are legal arguments to pass to
     <strong><code>action</code></strong>
@@ -18,46 +32,127 @@
   <ul>
     <li><code>togglePower</code></li>
     <ul>
-      <li>This argument will flip the power state of the light(s)</li>
+      <li>This argument will flip the power state of the non-dome light(s)</li>
     </ul>
     <li><code>brightOneStep</code></li>
     <ul>
       <li>
-        This argument will increase the brightness of the light(s) by 1 step
+        This argument will increase the brightness of the non-dome light(s) by 1
+        step
       </li>
     </ul>
     <li><code>dimOneStep</code></li>
     <ul>
       <li>
-        This argument will decrease the brightness of the light(s) by 1 step
+        This argument will decrease the brightness of the non-dome light(s) by 1
+        step
       </li>
     </ul>
     <li><code>fullBright</code></li>
     <ul>
       <li>
-        This argument will set the light(s) to the highest possible brightness
+        This argument will set the non-dome light(s) to the highest possible
+        brightness
       </li>
     </ul>
     <li><code>fullDim</code></li>
     <ul>
       <li>
-        This argument will set the light(s) to the lowest possible brightness
+        This argument will set the non-dome light(s) to the lowest possible
+        brightness
       </li>
     </ul>
     <li><code>customBright</code></li>
     <ul>
       <li>
-        This argument will set the light(s) to a specific brightness percentage.
+        This argument will set the non-dome light(s) to a specific brightness
+        percentage.
       </li>
       <li>
         If <code>customBright</code> is used then the
-        <strong><code>percent</code></strong> parameter must also be passed
+        <strong>
+          <code>
+            <a href="#percent">percent</a>
+          </code>
+        </strong>
+        parameter must also be passed
       </li>
+    </ul>
+    <li><code>domeOn</code></li>
+    <ul>
+      <li>This argument will turn the dome light on</li>
+    </ul>
+    <li><code>domeOff</code></li>
+    <ul>
+      <li>This argument will turn the dome light off</li>
     </ul>
   </ul>
 
   <br />
-  <h2><strong>percent</strong></h2>
+  <hr />
+  <h2 id="targets" style="color: red"><strong>targets</strong></h2>
+  <h3>
+    Adding the
+    <strong><code>targets</code></strong> parameter will make the
+    <strong>
+      <code>
+        <a href="#action">action</a>
+      </code>
+    </strong>
+    parameter's command only apply to the lights defined in the targets array
+  </h3>
+  <h5>
+    Legal arguments to pass to the
+    <strong><code>targets</code></strong>
+    parameter are listed below, along with proper syntax examples
+  </h5>
+
+  <ul>
+    <li><code>center</code></li>
+    <ul>
+      <li>Controls the center light</li>
+    </ul>
+    <li><code>left</code></li>
+    <ul>
+      <li>Controls the left light</li>
+    </ul>
+    <li><code>right</code></li>
+    <ul>
+      <li>Controls the right light</li>
+    </ul>
+    <li><code>dome</code></li>
+    <ul>
+      <li>
+        This is considered a legal argument, although none of the current action
+        commands are effected by using the dome target since dome commands have
+        their own action arguments
+      </li>
+    </ul>
+  </ul>
+
+  <h4>Syntax Format</h4>
+  <p><code>targets=[arg1,arg2,arg3]</code></p>
+  <p>
+    Each argument should be placed within straight brackets, without outer
+    quotes, and comma seperated without spaces between arguments
+  </p>
+
+  <h4>Syntax Example 1</h4>
+  <p><code>targets=[center,left]</code></p>
+  <p>
+    This will control only the center and left lights, but leaves the right
+    light uneffected
+  </p>
+
+  <h4>Syntax Example 2</h4>
+  <p><code>targets=[right]</code></p>
+  <p>
+    This will control only the right light, but leaves the others uneffected
+  </p>
+  <br />
+
+  <hr />
+  <h2 id="percent" style="color: red"><strong>percent</strong></h2>
   <h3>
     Specific actions may also require the
     <strong><code>percent</code></strong> parameter

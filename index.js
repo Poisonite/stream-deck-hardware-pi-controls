@@ -8,13 +8,7 @@ const fs = require("fs");
 // Import Rasp Pi GPIO control package
 var Gpio = require("onoff").Gpio;
 
-// Store a dictionary of which button is on which GPIO
-const lightButtonGPIOs = {
-  power: 2,
-  bright: 3,
-  dim: 4,
-};
-
+// Store a dictionary of which button/device is on which GPIO or set of GPIOs
 const deviceGpioList = {
   center: {
     power: 17,
@@ -36,7 +30,7 @@ const deviceGpioList = {
   },
 };
 
-// TODO: Update to reset all lights
+// Resets all of the devices to their beginning values (creates a known state)
 Object.keys(deviceGpioList).forEach((device) => {
   if (device === "dome") {
     //use the GPIO that we specified, and specify that it is output
@@ -61,6 +55,7 @@ Object.keys(deviceGpioList).forEach((device) => {
 });
 
 // Do a momentary press of the provided button
+// The default holdSeconds value (200ms) is the same as a non-held activation (single press)
 const pressButton = (GPIO, holdSeconds = 0.2) => {
   //use the GPIO that we specified, and specify that it is output
   var button = new Gpio(GPIO, "out");
@@ -76,6 +71,7 @@ const pressButton = (GPIO, holdSeconds = 0.2) => {
   }, holdMilli);
 };
 
+// Start the HTTP server
 http
   .createServer(function (req, res) {
     // Define storage for which device(s) we're going to control
