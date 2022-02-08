@@ -81,9 +81,8 @@ http
     // Define storage for which device(s) we're going to control
     let activeGpioList = {};
 
-    // Grab the passed query string and log it to the server
+    // Grab the passed query string
     const queryObject = url.parse(req.url, true).query;
-    console.log("Query String Provided:", queryObject);
 
     // Determine which devices we want to minipulate
     if (queryObject.targets) {
@@ -124,8 +123,6 @@ http
       activeGpioList = deviceGpioList;
     }
 
-    console.log("Active GPIO List:", activeGpioList);
-
     // Turn the power on
     if (queryObject.action === "togglePower") {
       Object.keys(activeGpioList).forEach((device) => {
@@ -137,6 +134,7 @@ http
           console.log(
             `Toggling dome light power, GPIO: ${activeGpioList[device].power}`
           );
+          console.log("Dome Light Read:", lightSwitch.readSync());
           !lightSwitch.readSync()
             ? lightSwitch.writeSync(0)
             : lightSwitch.writeSync(1);
