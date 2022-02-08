@@ -10,9 +10,9 @@ var Gpio = require("onoff").Gpio;
 
 // Store a dictionary of which button is on which GPIO
 const lightButtonGPIOs = {
-  power: 17,
-  bright: 27,
-  dim: 22,
+  power: 2,
+  bright: 3,
+  dim: 4,
 };
 
 const lightGpioList = [
@@ -22,9 +22,9 @@ const lightGpioList = [
     dim: 22,
   },
   {
-    power: 17,
-    bright: 27,
-    dim: 22,
+    power: 2,
+    bright: 3,
+    dim: 4,
   },
   {
     power: 17,
