@@ -37,14 +37,27 @@ const deviceGpioList = {
 };
 
 // TODO: Update to reset all lights
-// Reset each button to it's non-pressed value
-Object.values(lightButtonGPIOs).forEach((GPIO) => {
-  //use the GPIO that we specified, and specify that it is output
-  var button = new Gpio(GPIO, "out");
+Object.keys(deviceGpioList).forEach((device) => {
+  if (device === "dome") {
+    //use the GPIO that we specified, and specify that it is output
+    var lightSwitch = new Gpio(activeGpioList[device].power, "out");
 
-  // Reset button to default value (not pressed)
-  console.log(`Resetting GPIO ${GPIO} to HIGH`);
-  button.writeSync(1);
+    // Switch the GPIO value to LOW (off)
+    console.log(
+      `Turning off dome light, GPIO: ${activeGpioList[device].power}`
+    );
+    lightSwitch.writeSync(1);
+  } else {
+    // Reset each button to it's non-pressed value
+    Object.values(deviceGpioList[device]).forEach((GPIO) => {
+      //use the GPIO that we specified, and specify that it is output
+      var button = new Gpio(GPIO, "out");
+
+      // Reset button to default value (not pressed)
+      console.log(`Resetting ${device} light GPIO ${GPIO} to HIGH`);
+      button.writeSync(1);
+    });
+  }
 });
 
 // Do a momentary press of the provided button
@@ -125,8 +138,8 @@ http
             `Toggling dome light power, GPIO: ${activeGpioList[device].power}`
           );
           !lightSwitch.readSync()
-            ? lightSwitch.writeSync(1)
-            : lightSwitch.writeSync(0);
+            ? lightSwitch.writeSync(0)
+            : lightSwitch.writeSync(1);
         } else {
           console.info(
             `Toggling ${device} light power, GPIO: ${activeGpioList[device].power}`
