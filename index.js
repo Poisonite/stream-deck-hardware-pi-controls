@@ -128,7 +128,7 @@ http
       var lightSwitch = new Gpio(deviceGpioList.dome.power, "out");
 
       // Switch the GPIO value to LOW (off)
-      console.log(`Turning on dome light, GPIO: ${deviceGpioList[dome].power}`);
+      console.log(`Turning on dome light, GPIO: ${deviceGpioList.dome.power}`);
       lightSwitch.writeSync(0);
     }
 
