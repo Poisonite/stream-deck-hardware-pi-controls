@@ -42,7 +42,7 @@ Object.keys(deviceGpioList).forEach((device) => {
     //use the GPIO that we specified, and specify that it is output
     var lightSwitch = new Gpio(deviceGpioList[device].power, "out");
 
-    // Switch the GPIO value to LOW (off)
+    // Switch the GPIO value to HIGH (off)
     console.log(
       `Turning off dome light, GPIO: ${deviceGpioList[device].power}`
     );
@@ -123,23 +123,22 @@ http
       activeGpioList = deviceGpioList;
     }
 
+    // Turn on the dome light
     if ((queryObject.action = "domeOn")) {
       //use the GPIO that we specified, and specify that it is output
       var lightSwitch = new Gpio(deviceGpioList.dome.power, "out");
 
-      // Switch the GPIO value to LOW (off)
+      // Switch the GPIO value to LOW (on)
       console.log(`Turning on dome light, GPIO: ${deviceGpioList.dome.power}`);
       lightSwitch.writeSync(0);
     }
-
+    // Turn off the dome light
     if ((queryObject.action = "domeOff")) {
       //use the GPIO that we specified, and specify that it is output
       var lightSwitch = new Gpio(deviceGpioList.dome.power, "out");
 
-      // Switch the GPIO value to LOW (off)
-      console.log(
-        `Turning off dome light, GPIO: ${deviceGpioList[dome].power}`
-      );
+      // Switch the GPIO value to HIGH (off)
+      console.log(`Turning off dome light, GPIO: ${deviceGpioList.dome.power}`);
       lightSwitch.writeSync(1);
     }
 
