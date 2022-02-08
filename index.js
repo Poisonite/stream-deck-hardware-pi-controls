@@ -123,21 +123,32 @@ http
       activeGpioList = deviceGpioList;
     }
 
-    // Turn the power on
+    if ((queryObject.action = domeOn)) {
+      //use the GPIO that we specified, and specify that it is output
+      var lightSwitch = new Gpio(deviceGpioList.dome.power, "out");
+
+      // Switch the GPIO value to LOW (off)
+      console.log(`Turning on dome light, GPIO: ${deviceGpioList[dome].power}`);
+      lightSwitch.writeSync(0);
+    }
+
+    if ((queryObject.action = domeOn)) {
+      //use the GPIO that we specified, and specify that it is output
+      var lightSwitch = new Gpio(deviceGpioList.dome.power, "out");
+
+      // Switch the GPIO value to LOW (off)
+      console.log(
+        `Turning off dome light, GPIO: ${deviceGpioList[dome].power}`
+      );
+      lightSwitch.writeSync(1);
+    }
+
+    // Turn the power on or off depending on current value
     if (queryObject.action === "togglePower") {
       Object.keys(activeGpioList).forEach((device) => {
         if (device === "dome") {
-          //use the GPIO that we specified, and specify that it is output
-          var lightSwitch = new Gpio(activeGpioList[device].power, "out");
-
-          // Switch the GPIO value to the opposite of what it is currently
-          console.log(
-            `Toggling dome light power, GPIO: ${activeGpioList[device].power}`
-          );
-          console.log("Dome Light Read:", lightSwitch.readSync().valueOf());
-          !lightSwitch.readSync()
-            ? lightSwitch.writeSync(0)
-            : lightSwitch.writeSync(1);
+          // Nothing for a dome light to do here, so skip it
+          return;
         } else {
           console.info(
             `Toggling ${device} light power, GPIO: ${activeGpioList[device].power}`
