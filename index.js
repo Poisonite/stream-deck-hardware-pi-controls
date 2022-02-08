@@ -15,24 +15,28 @@ const lightButtonGPIOs = {
   dim: 4,
 };
 
-const lightGpioList = [
-  {
+const deviceGpioList = {
+  center: {
     power: 17,
     bright: 27,
     dim: 22,
   },
-  {
-    power: 2,
-    bright: 3,
-    dim: 4,
+  left: {
+    power: 13,
+    bright: 19,
+    dim: 26,
   },
-  {
-    power: 17,
-    bright: 27,
-    dim: 22,
+  right: {
+    power: 16,
+    bright: 20,
+    dim: 21,
   },
-];
+  dome: {
+    power: 12,
+  },
+};
 
+// TODO: Update to reset all lights
 // Reset each button to it's non-pressed value
 Object.values(lightButtonGPIOs).forEach((GPIO) => {
   //use the GPIO that we specified, and specify that it is output
@@ -61,37 +65,118 @@ const pressButton = (GPIO, holdSeconds = 0.2) => {
 
 http
   .createServer(function (req, res) {
+    // Define storage for which device(s) we're going to control
+    let activeGpioList = {};
+
+    // Grab the passed query string and log it to the server
     const queryObject = url.parse(req.url, true).query;
-    console.log(queryObject);
+    console.log("Query String Provided:", queryObject);
+
+    // Determine which devices we want to minipulate
+    if (queryObject.targets) {
+      // Add each targeted device to the active target object
+      queryObject.targets.forEach((target) => {
+        // Skip if the target value provided doesn't
+        //    match one of the defined targets in the master object
+        if (!deviceGpioList[target]) {
+          return;
+        }
+        // Add the device provided by the target
+        //    element to the list of targets to minipulate
+        activeGpioList[target] = deviceGpioList[target];
+      });
+      // Sets all targets to active if only invalid target keywords were passed
+      if (Object.keys(activeGpioList).length <= 0) {
+        activeGpioList = deviceGpioList;
+      }
+    } else {
+      // Set all targets to active if no values are passed
+      activeGpioList = deviceGpioList;
+    }
+
+    console.log("Active GPIO List:", activeGpioList);
+
     // Turn the power on
     if (queryObject.action === "togglePower") {
-      console.info(`Toggling power, GPIO: ${lightButtonGPIOs.power}`);
-      pressButton(lightButtonGPIOs.power);
+      Object.keys(activeGpioList).forEach((device) => {
+        if (device === "dome") {
+          //use the GPIO that we specified, and specify that it is output
+          var lightSwitch = new Gpio(activeGpioList[device].power, "out");
+
+          // Switch the GPIO value to the opposite of what it is currently
+          console.log(
+            `Toggling dome light power, GPIO: ${activeGpioList[device].power}`
+          );
+          !lightSwitch.readSync()
+            ? lightSwitch.writeSync(1)
+            : lightSwitch.writeSync(0);
+        } else {
+          console.info(
+            `Toggling ${device} light power, GPIO: ${activeGpioList[device].power}`
+          );
+          pressButton(activeGpioList[device].power);
+        }
+      });
     }
+
     // Increase brightness by 1 controller step
     if (queryObject.action === "brightOneStep") {
-      console.info(
-        `Raise brightness by 1 step, GPIO: ${lightButtonGPIOs.bright}`
-      );
-      pressButton(lightButtonGPIOs.bright);
+      Object.keys(activeGpioList).forEach((device) => {
+        if (device === "dome") {
+          // Nothing for a dome light to do here, so skip it
+          return;
+        } else {
+          console.info(
+            `Raising ${device} light brightness by 1 step, GPIO: ${activeGpioList[device].bright}`
+          );
+          pressButton(activeGpioList[device].bright);
+        }
+      });
     }
     // Decrease brightness by 1 controller step
     if (queryObject.action === "dimOneStep") {
-      console.info(`Lower brightness by 1 step, GPIO: ${lightButtonGPIOs.dim}`);
-      pressButton(lightButtonGPIOs.dim);
+      Object.keys(activeGpioList).forEach((device) => {
+        if (device === "dome") {
+          // Nothing for a dome light to do here, so skip it
+          return;
+        } else {
+          console.info(
+            `Lowering ${device} light brightness by 1 step, GPIO: ${activeGpioList[device].dim}`
+          );
+          pressButton(activeGpioList[device].dim);
+        }
+      });
     }
+
     // Hold brightness button for 5 seconds to simulate full brightness
     if (queryObject.action === "fullBright") {
-      console.info(
-        `Setting as bright as possible, GPIO: ${lightButtonGPIOs.bright}`
-      );
-      pressButton(lightButtonGPIOs.bright, 5);
+      Object.keys(activeGpioList).forEach((device) => {
+        if (device === "dome") {
+          // Nothing for a dome light to do here, so skip it
+          return;
+        } else {
+          console.info(
+            `Setting ${device} light as bright as possible, GPIO: ${activeGpioList[device].bright}`
+          );
+          pressButton(activeGpioList[device].bright, 5);
+        }
+      });
     }
     // Hold dimmer button for 5 seconds to simulate lowest brightness
     if (queryObject.action === "fullDim") {
-      console.info(`Setting as dim as possible, GPIO: ${lightButtonGPIOs.dim}`);
-      pressButton(lightButtonGPIOs.dim, 5);
+      Object.keys(activeGpioList).forEach((device) => {
+        if (device === "dome") {
+          // Nothing for a dome light to do here, so skip it
+          return;
+        } else {
+          console.info(
+            `Setting ${device} light as dim as possible, GPIO: ${activeGpioList[device].dim}`
+          );
+          pressButton(activeGpioList[device].dim, 5);
+        }
+      });
     }
+
     // Set the brightness to a speific precentage out of 100
     if ((queryObject.action = "customBright" && queryObject.percent)) {
       const holdTime =
@@ -99,17 +184,31 @@ http
           ? queryObject.percent * 0.03
           : queryObject.percent * 0.03 + 0.5;
 
-      // Full dim
-      console.log(`Setting as dim as possible, GPIO: ${lightButtonGPIOs.dim}`);
-      pressButton(lightButtonGPIOs.dim, 5);
+      Object.keys(activeGpioList).forEach((device) => {
+        if (device === "dome") {
+          // Nothing for a dome light to do here, so skip it
+          return;
+        } else {
+          // Full dim
+          console.info(
+            `Setting ${device} light as dim as possible, GPIO: ${activeGpioList[device].dim}`
+          );
+          pressButton(activeGpioList[device].dim, 5);
 
-      // set the provided brightness after fully dim
-      setTimeout(() => {
-        pressButton(lightButtonGPIOs.bright, holdTime);
-      }, 5200);
+          // set the provided brightness after fully dim
+          setTimeout(() => {
+            console.info(
+              `Setting ${device} light to ${queryObject.percent}%, GPIO: ${activeGpioList[device].bright}`
+            );
+            pressButton(activeGpioList[device].bright, holdTime);
+          }, 5200);
+        }
+      });
     }
 
+    // Write out our documentation to the DOM
     res.writeHead(200, { "Content-Type": "text/html" });
     fs.createReadStream("index.html").pipe(res);
   })
+  // Run on the default HTTP port (Requires that node be run as SUDO)
   .listen(80);
