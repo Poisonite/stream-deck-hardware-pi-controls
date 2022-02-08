@@ -40,11 +40,11 @@ const deviceGpioList = {
 Object.keys(deviceGpioList).forEach((device) => {
   if (device === "dome") {
     //use the GPIO that we specified, and specify that it is output
-    var lightSwitch = new Gpio(activeGpioList[device].power, "out");
+    var lightSwitch = new Gpio(deviceGpioList[device].power, "out");
 
     // Switch the GPIO value to LOW (off)
     console.log(
-      `Turning off dome light, GPIO: ${activeGpioList[device].power}`
+      `Turning off dome light, GPIO: ${deviceGpioList[device].power}`
     );
     lightSwitch.writeSync(1);
   } else {
